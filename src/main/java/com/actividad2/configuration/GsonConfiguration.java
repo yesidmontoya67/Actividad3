@@ -19,21 +19,15 @@ public class GsonConfiguration {
 
     @Bean
     public Gson gson(){
-        Function<String,Segundo> segundo = new Function<String, Segundo>() {
-            @Override
-            public Segundo apply(String s) {
-                return Segundo.of(Integer.parseInt(s));
-            }
-        };
 
-        Function<String,Minuto> minuto = s -> Minuto.of(Integer.parseInt(s));
+        Function<Integer,Minuto> minuto = s -> Minuto.of(s);
 
-        Function<String,Hora> hora = s -> Hora.of(Integer.parseInt(s));
+        Function<Integer,Hora> hora = s -> Hora.of(s);
 
         return new GsonBuilder()
                 .registerTypeAdapter(Hora.class,new IntValueAdapter<>(hora))
                 .registerTypeAdapter(Minuto.class,new IntValueAdapter<>(minuto))
-                .registerTypeAdapter(Segundo.class,new IntValueAdapter<>(segundo))
+                .registerTypeAdapter(Segundo.class,new IntValueAdapter<>(Segundo::of))
                 .create();
     }
 }

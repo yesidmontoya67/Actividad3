@@ -7,16 +7,16 @@ import java.util.function.Function;
 
 public class IntValueAdapter<T extends IntSerializable> implements GsonAdapter<T>{
 
-    private final Function<String,T> factory;
+    private final Function<Integer,T> factory;
 
-    public IntValueAdapter(Function<String, T> factory) {
+    public IntValueAdapter(Function<Integer, T> factory) {
         this.factory = factory;
     }
 
     @Override
     public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         int value= jsonElement.getAsInt();
-        return factory.apply(String.valueOf(value));
+        return factory.apply(value);
     }
 
     @Override
